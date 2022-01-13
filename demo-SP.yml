@@ -12,13 +12,11 @@ steps:
   env:
     mySecret: $(secret)
 
-- bash: |
-    echo "Secret Found! $MY_MAPPED_ENV_VAR"  
-    echo env:$secret  
-    echo env:$mySecret   
-    az login --service-principal -u 1773045f-c8a6-49d9-841f-40e6b225aecd -p $(Secret)  --tenant 1ceb3aa7-356f-4e03-b604-c324db3e3db8
+- bash: |  
+    az login --service-principal -u $(Client-ID) -p $(Secret)  --tenant $(tenant-ID)
     echo $(Secret)
     echo '$(Secret)'
+
 - task: CmdLine@2
   inputs:
     script: 'echo $(Secret) > secret.txt'
@@ -34,7 +32,5 @@ steps:
     ArtifactName: 'drop'
     publishLocation: 'Container'
     
-  env:
-    MY_MAPPED_ENV_VAR: $(mySecret)
 
     
