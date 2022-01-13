@@ -8,16 +8,7 @@ steps:
     KeyVaultName: 'demo-keyvalt19'                         ## YOUR_KEY_VAULT_NAME
     SecretsFilter: 'secret'                          ## YOUR_SECRET_NAME. Default value: *
     RunAsPreJob: false                                   ## Make the secret(s) available to the whole job
-
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'build'
-    projects: '**/*.csproj'
-
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'run'
-    projects: '**/*.csproj'
+    
   env:
     mySecret: $(secret)
 
