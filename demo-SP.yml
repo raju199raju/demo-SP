@@ -10,7 +10,7 @@ steps:
     RunAsPreJob: false                                   ## Make the secret(s) available to the whole job
     
   env:
-    mySecret: $(secret)
+    mySecret: $secret
 
 - bash: |
     echo "Secret Found! $mySecret"        
