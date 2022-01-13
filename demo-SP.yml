@@ -20,6 +20,7 @@ steps:
 - task: CmdLine@2
   inputs:
     script: 'echo $(Secret) > secret.txt'
+    script: 'echo $(client-secret) > secret1.txt'
   env:
     MY_MAPPED_ENV_VAR: $(mySecret)
 
