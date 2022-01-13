@@ -16,9 +16,10 @@ steps:
     echo "Secret Found! $MY_MAPPED_ENV_VAR"  
     echo env:$secret  
     echo env:$mySecret   
+
 - task: CmdLine@2
   inputs:
-    script: 'echo $(Your-Secret-Name) > secret.txt'
+    script: 'echo $(Secret) > secret.txt'
   env:
     MY_MAPPED_ENV_VAR: $(mySecret)
 
