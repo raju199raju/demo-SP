@@ -6,7 +6,7 @@ steps:
   inputs:
     azureSubscription: 'demo-SP'                    ## YOUR_SERVICE_CONNECTION_NAME
     KeyVaultName: 'demo-keyvalt19'                         ## YOUR_KEY_VAULT_NAME
-    SecretsFilter: 'secret'                          ## YOUR_SECRET_NAME. Default value: *
+    SecretsFilter: '*'                          ## YOUR_SECRET_NAME. Default value: *
     RunAsPreJob: false                                   ## Make the secret(s) available to the whole job
     
   env:
