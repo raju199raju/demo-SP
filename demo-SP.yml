@@ -13,6 +13,6 @@ steps:
     mySecret: $secret
 
 - bash: |
-    echo "Secret Found! $mySecret"        
+    echo "Secret Found! $secret"        
   env:
     MY_MAPPED_ENV_VAR: $(mySecret)
