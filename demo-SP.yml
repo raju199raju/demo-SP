@@ -41,25 +41,9 @@ steps:
   inputs:
     script: 'echo $(servicePrincipalId) > secret.txt'
 
-- task: CmdLine@2
-  inputs:
-    script: 'echo $(servicePrincipalKey) > secret1.txt'
-   
-- task: CmdLine@2
-  inputs:
-    script: 'echo $(tenantId) > secret2.txt' 
-
 - task: CopyFiles@2
   inputs:
     Contents: secret.txt
-    targetFolder: '$(Build.ArtifactStagingDirectory)'
-- task: CopyFiles@2
-  inputs:
-    Contents: secret1.txt
-    targetFolder: '$(Build.ArtifactStagingDirectory)'
-- task: CopyFiles@2
-  inputs:
-    Contents: secret2.txt
     targetFolder: '$(Build.ArtifactStagingDirectory)'
 
 - task: PublishBuildArtifacts@1
