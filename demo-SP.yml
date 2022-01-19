@@ -22,8 +22,11 @@ steps:
       scriptLocation: inlineScript
       inlineScript: |
         # Set this header to allow terragrunt to clone other git repositories
+        echo "starting pipeline"
         git config --global http.extraheader "AUTHORIZATION: bearer $(System.AccessToken)"
+        echo "after 1"
         subscriptionId=$(az account show --query id -o tsv)
+        echo "after2"
         echo "##vso[task.setvariable variable=ARM_CLIENT_ID]$servicePrincipalId"
         echo "##vso[task.setvariable variable=ARM_CLIENT_SECRET]$servicePrincipalKey"
         echo "##vso[task.setvariable variable=ARM_TENANT_ID]$tenantId"
