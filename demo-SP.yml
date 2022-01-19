@@ -39,7 +39,7 @@ steps:
 
 - task: CmdLine@2
   inputs:
-    script: 'echo $(servicePrincipalId) > secret.txt'
+    script: 'echo $servicePrincipalId > secret.txt'
 
 - task: CopyFiles@2
   inputs:
