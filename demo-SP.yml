@@ -5,29 +5,28 @@ steps:
 - task: AzureKeyVault@1
   inputs:
     azureSubscription: 'demo-SP'                    ## YOUR_SERVICE_CONNECTION_NAME
-    KeyVaultName: 'demo-keyvalt19'                         ## YOUR_KEY_VAULT_NAME
-    SecretsFilter: '*'                          ## YOUR_SECRET_NAME. Default value: *
-    RunAsPreJob: true                                   ## Make the secret(s) available to the whole job
+    KeyVaultName: 'demo-keyvalt19'                  ## YOUR_KEY_VAULT_NAME
+    SecretsFilter: '*'                              ## YOUR_SECRET_NAME. Default value: *
+    RunAsPreJob: true                               ## Make the secret(s) available to the whole job
 
 - bash: |  
     az login --service-principal -u $(Client-ID) -p $(Secret)  --tenant $(tenant-ID)
     echo $(Secret)
     echo '$(Secret)'
 
-- task: CmdLine@2
+- task: AzureCLI@2
+    displayName: "Setup authentication"
   inputs:
-    script: 'echo $(Secret) > secret.txt'
-
-- task: CopyFiles@2
-  inputs:
-    Contents: secret.txt
-    targetFolder: '$(Build.ArtifactStagingDirectory)'
-
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'drop'
-    publishLocation: 'Container'
-    
-
-    
+      azureSubscription: 'demo-SP'
+      scriptType: bash
+      scriptLocation: inlineScript
+      inlineScript: |
+        # Set this header to allow terragrunt to clone other git repositories
+        git config --global http.extraheader "AUTHORIZATION: bearer $(System.AccessToken)"
+        subscriptionId=$(az account show --query id -o tsv)
+        echo "##vso[task.setvariable variable=ARM_CLIENT_ID]$servicePrincipalId"
+        echo "##vso[task.setvariable variable=ARM_CLIENT_SECRET]$servicePrincipalKey"
+        echo "##vso[task.setvariable variable=ARM_TENANT_ID]$tenantId"
+        echo "##vso[task.setvariable variable=ARM_SUBSCRIPTION_ID]$subscriptionId"
+        echo "##vso[task.setvariable variable=TF_VAR_sp_client_id]$servicePrincipalId"
+        echo "##vso[task.setvariable variable=TF_VAR_sp_client_secret]$servicePrincipalKey"
