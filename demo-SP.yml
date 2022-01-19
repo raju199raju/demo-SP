@@ -35,7 +35,7 @@ steps:
         echo $servicePrincipalKey
         echo $servicePrincipalId
         echo $tenantId
-        echo $ARM_CLIENT_ID
+        echo '$ARM_CLIENT_ID'
         echo ARM_CLIENT_ID
       addSpnToEnvironment: true
 
