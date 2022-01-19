@@ -31,10 +31,9 @@ steps:
         echo "##vso[task.setvariable variable=ARM_CLIENT_SECRET]$servicePrincipalKey"
         echo "##vso[task.setvariable variable=ARM_TENANT_ID]$tenantId"
         echo "##vso[task.setvariable variable=ARM_SUBSCRIPTION_ID]$subscriptionId"
-        echo "##vso[task.setvariable variable=TF_VAR_sp_client_id]$servicePrincipalId"
-        echo "##vso[task.setvariable variable=TF_VAR_sp_client_secret]$servicePrincipalKey"
-        echo $ARM_CLIENT_ID
+    
+        echo ARM_CLIENT_SECRET
         echo ARM_CLIENT_ID
         echo $servicePrincipalId
-        echo servicePrincipalId
+        echo ARM_TENANT_ID
       addSpnToEnvironment: true
