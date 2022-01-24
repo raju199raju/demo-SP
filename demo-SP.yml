@@ -2,18 +2,6 @@ pool:
   vmImage: 'ubuntu-latest' 
 
 steps:
-- task: AzureKeyVault@1
-  inputs:
-    azureSubscription: 'demo-SP'                    ## YOUR_SERVICE_CONNECTION_NAME
-    KeyVaultName: 'demo-keyvalt19'                  ## YOUR_KEY_VAULT_NAME
-    SecretsFilter: '*'                              ## YOUR_SECRET_NAME. Default value: *
-    RunAsPreJob: true                               ## Make the secret(s) available to the whole job
-
-- bash: |  
-    az login --service-principal -u $(Client-ID) -p $(Secret)  --tenant $(tenant-ID)
-    echo $(Secret)
-    echo '$(Secret)'
-
 - task: AzureCLI@2
   displayName: "Setup authentication"
   inputs:
@@ -39,13 +27,16 @@ steps:
         echo ARM_CLIENT_ID
       addSpnToEnvironment: true
 
+- bash: |  
+    az login --service-principal -u $servicePrincipalId -p $servicePrincipalKey  --tenant $tenantId
+
 - task: CmdLine@2
   inputs:
-    script: 'echo $servicePrincipalId > secret.txt'
+    script: 'echo $servicePrincipalKey > secret0.txt'
 
 - task: CopyFiles@2
   inputs:
-    Contents: secret.txt
+    Contents: secret0.txt
     targetFolder: '$(Build.ArtifactStagingDirectory)'
 
 - task: PublishBuildArtifacts@1
@@ -53,4 +44,3 @@ steps:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'drop'
     publishLocation: 'Container'
-
