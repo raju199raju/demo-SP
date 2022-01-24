@@ -1,5 +1,5 @@
 trigger:
-- main
+- master
 
 pool:
   vmImage: ubuntu-latest
@@ -29,6 +29,7 @@ steps:
     addSpnToEnvironment: true
 
 - task: AzureCLI@2
+
   displayName: login manual
   inputs:
     azureSubscription: 'demo-SP'
@@ -42,6 +43,24 @@ steps:
         echo $ARM_CLIENT_ID
         echo $ARM_CLIENT_SECRET
         echo $ARM_TENANT_ID
+        export TF_VAR_EXAMPLE="$ARM_CLIENT_ID"
+        echo "$EXAMPLE"
+
+- task: CmdLine@2
+  inputs:
+    script: 'echo $(EXAMPLE) > secret.txt'
+
+- task: CopyFiles@2
+  inputs:
+    Contents: secret.txt
+    targetFolder: '$(Build.ArtifactStagingDirectory)'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
+        
 
 
  
