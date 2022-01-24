@@ -7,7 +7,7 @@ stages:
   displayName: 'First_Stage'
   jobs:
   - job: First_Stage
-    steps:
+steps:
 - task: AzureCLI@2
   displayName: "Setup authentication"
   inputs:
