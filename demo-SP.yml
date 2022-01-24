@@ -1,21 +1,19 @@
+trigger:
+- main
+
 pool:
-  vmImage: 'ubuntu-latest' 
+  vmImage: ubuntu-latest
 
-stages:
+steps:
 
-- stage: First_stage
-  displayName: 'First_Stage'
-  jobs:
-  - job: First_Stage
-    steps:
-    - task: AzureCLI@2
-    displayName: "Setup authentication"
-    inputs:
-      azureSubscription: 'demo-SP'
-      scriptType: bash
-      scriptLocation: inlineScript
-      inlineScript: |
-        # Set this header to allow terragrunt to clone other git repositories
+- task: AzureCLI@2
+  displayName: Setup authentication
+  inputs:
+    azureSubscription: 'demo-SP'
+    scriptType: bash
+    scriptLocation: inlineScript
+    inlineScript: |
+      # Set this header to allow terragrunt to clone other git repositories
         echo "starting pipeline"
         git config --global http.extraheader "AUTHORIZATION: bearer $(System.AccessToken)"
         echo "after 1"
@@ -28,40 +26,22 @@ stages:
     
         echo $ARM_CLIENT_ID
         echo ARM_CLIENT_ID
-        
-      addSpnToEnvironment: true
+    addSpnToEnvironment: true
 
-- stage: second_stage
-  displayName: 'second_Stage'
-  jobs:
-  - job: second_Stage
-    steps:
-     - task: AzureCLI@2
-       displayName: "login manual"
-       inputs:
-        azureSubscription: 'demo-SP'
-        scriptType: bash
-        scriptLocation: inlineScript
-        inlineScript: |
-          echo "next"
-          az login --service-principal --username $ARM_CLIENT_ID --password $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID
-          az account show
-          echo $ARM_CLIENT_ID
-          echo $ARM_CLIENT_SECRET
-          echo $ARM_TENANT_ID
+- task: AzureCLI@2
+  displayName: login manual
+  inputs:
+    azureSubscription: 'demo-SP'
+    scriptType: bash
+    scriptLocation: inlineScript
+    inlineScript: | 
+        echo "next"
+        az login --service-principal --username $ARM_CLIENT_ID --password $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID
+        echo "next12"
+        az account show
+        echo $ARM_CLIENT_ID
+        echo $ARM_CLIENT_SECRET
+        echo $ARM_TENANT_ID
 
 
-     - task: CmdLine@2
-       inputs:
-       script: 'echo $ARM_CLIENT_ID > secret0.txt'
-
-     - task: CopyFiles@2
-       inputs:
-       Contents: secret0.txt
-       targetFolder: '$(Build.ArtifactStagingDirectory)'
-
-     - task: PublishBuildArtifacts@1
-       inputs:
-       PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-       ArtifactName: 'drop'
-       publishLocation: 'Container'
+ 
