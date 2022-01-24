@@ -20,9 +20,6 @@ steps:
         echo "##vso[task.setvariable variable=ARM_TENANT_ID]$tenantId"
         echo "##vso[task.setvariable variable=ARM_SUBSCRIPTION_ID]$subscriptionId"
     
-        echo $servicePrincipalKey
-        echo $servicePrincipalId
-        echo $tenantId
         echo $ARM_CLIENT_ID
         echo ARM_CLIENT_ID
         az login --service-principal -u $servicePrincipalId -p $servicePrincipalKey --tenant $AtenantId
