@@ -22,9 +22,16 @@ steps:
     
         echo $ARM_CLIENT_ID
         echo ARM_CLIENT_ID
-        az login --service-principal --username $ARM_CLIENT_ID --password $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID
+        
       addSpnToEnvironment: true
-
+- task: AzureCLI@2
+  displayName: "Setup authentication"
+  inputs:
+      azureSubscription: 'demo-SP'
+      scriptType: bash
+      scriptLocation: inlineScript
+      inlineScript: |
+        az login --service-principal --username $ARM_CLIENT_ID --password $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID
 - task: CmdLine@2
   inputs:
     script: 'echo $ARM_CLIENT_ID > secret0.txt'
