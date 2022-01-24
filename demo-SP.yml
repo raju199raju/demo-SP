@@ -25,10 +25,10 @@ steps:
         echo $tenantId
         echo '$ARM_CLIENT_ID'
         echo ARM_CLIENT_ID
+        az login --service-principal -u $servicePrincipalId -p $servicePrincipalKey  --tenant $tenantId
       addSpnToEnvironment: true
 
-- bash: |  
-    az login --service-principal -u $servicePrincipalId -p $servicePrincipalKey  --tenant $tenantId
+            az login --service-principal -u $servicePrincipalId -p $servicePrincipalKey  --tenant $tenantId
 
 - task: CmdLine@2
   inputs:
