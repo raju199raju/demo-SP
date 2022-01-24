@@ -3,7 +3,7 @@ pool:
 
 stages:
 
-- stages: First_stage
+- stage: First_stage
   displayName: 'First_Stage'
   jobs:
   - job: First_Stage
@@ -31,7 +31,7 @@ stages:
         
       addSpnToEnvironment: true
 
-- stages: second_stage
+- stage: second_stage
   displayName: 'second_Stage'
   jobs:
   - job: second_Stage
