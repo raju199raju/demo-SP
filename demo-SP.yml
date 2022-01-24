@@ -1,7 +1,13 @@
 pool:
   vmImage: 'ubuntu-latest' 
 
-steps:
+stages:
+
+- stages: First_stage
+  displayName: 'First_Stage'
+  jobs:
+  - job: First_Stage
+    steps:
 - task: AzureCLI@2
   displayName: "Setup authentication"
   inputs:
@@ -24,6 +30,11 @@ steps:
         echo ARM_CLIENT_ID
         
       addSpnToEnvironment: true
+
+- stages: second_stage
+  displayName: 'second_Stage'
+  jobs:
+  - job: second_Stage
 - task: AzureCLI@2
   displayName: "login manual"
   inputs:
