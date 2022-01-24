@@ -15,19 +15,19 @@ steps:
         echo "after 1"
         subscriptionId=$(az account show --query id -o tsv)
         echo $subscriptionId
-        echo "##vso[task.setvariable variable=ARM_CLIENT_ID]$servicePrincipalId"
-        echo "##vso[task.setvariable variable=ARM_CLIENT_SECRET]$servicePrincipalKey"
-        echo "##vso[task.setvariable variable=ARM_TENANT_ID]$tenantId"
-        echo "##vso[task.setvariable variable=ARM_SUBSCRIPTION_ID]$subscriptionId"
+        echo "##vso[task.setvariable variable=ARM_CLIENT_ID;]$servicePrincipalId"
+        echo "##vso[task.setvariable variable=ARM_CLIENT_SECRET;]$servicePrincipalKey"
+        echo "##vso[task.setvariable variable=ARM_TENANT_ID;]$tenantId"
+        echo "##vso[task.setvariable variable=ARM_SUBSCRIPTION_ID;]$subscriptionId"
     
         echo $ARM_CLIENT_ID
         echo ARM_CLIENT_ID
-        az login --service-principal -u $servicePrincipalId -p $servicePrincipalKey --tenant $AtenantId
+        az login --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID
       addSpnToEnvironment: true
 
 - task: CmdLine@2
   inputs:
-    script: 'echo $servicePrincipalKey > secret0.txt'
+    script: 'echo $ARM_CLIENT_ID > secret0.txt'
 
 - task: CopyFiles@2
   inputs:
