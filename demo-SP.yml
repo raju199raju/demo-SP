@@ -43,9 +43,11 @@ steps:
         echo $ARM_CLIENT_ID
         echo $ARM_CLIENT_SECRET
         echo $ARM_TENANT_ID
-        export TF_VAR_EXAMPLE="$ARM_CLIENT_ID"
+        export TF_VAR_EXAMPLE= $ARM_CLIENT_ID
         echo "nect12"
         echo $EXAMPLE
+        echo '$EXAMPLE'
+        echo EXAMPLE
 
 - task: CmdLine@2
   inputs:
