@@ -9,3 +9,5 @@ variables:
 
 steps:
 - script: echo $(deploymentStamp)
+- script: echo $(environment)
+- script: echo $(sourceBranch)
