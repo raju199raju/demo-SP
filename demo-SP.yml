@@ -11,6 +11,7 @@ steps:
 - script: echo $(deploymentStamp)
 - script: echo $(environment)
 - script: echo $(sourceBranch)
+- script: echo $(Build.SourceBranchName)
 
 parameters:
   - name: deploymentStamp
