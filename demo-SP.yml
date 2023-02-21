@@ -4,28 +4,22 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
-variables:
- -group: my-variable-group
-
-steps:
-- script: echo $(deploymentStamp)
-- script: echo $(environment)
-- script: echo $(sourceBranch)
-- script: echo $(Build.SourceBranchName)
-
-parameters:
-  - name: deploymentStamp
-    displayName: "Deployment stamp"
-    default: $(deploymentStamp)
-    values:
-      - "hwca1"
-      - $(deploymentStamp)
-  - name: environment
-    displayName: "Environment"
-    default: $(environment)
-    values:
-      - "dev"
-      - $(environment)
-  - name: sourceBranch
-    displayName: "canada_deployment/dev"
-    default: $(environment)
+stages:  
+- stage: Build  
+  jobs:  
+  - job: BuildJob  
+    steps:  
+    - script: echo Building!  
+- stage: Test  
+  jobs:  
+  - job: TestOne  
+    steps:  
+    - script: echo Test One  
+  - job: TestTwo 
+    steps:  
+    - script: echo Test Two  
+- stage: Deploy  
+  jobs:  
+  - job: Deploy  
+    steps:  
+    - script: echo Deploying the code! 
