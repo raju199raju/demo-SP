@@ -21,7 +21,6 @@ stages:
     - script: echo Test Two  
 - stage: Deploy  
   jobs: 
-    environment: Approver  
-  - job: Deploy 
+  - environment: Approver  
     steps:  
     - script: echo Deploying the code! 
