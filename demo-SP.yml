@@ -21,8 +21,8 @@ stages:
     - script: echo Test Two  
 - stage: Deploy  
   jobs: 
-    - deployment: 'terraform_apply'
-      environment: demo
-  - job: Deploy  
+     
+  - job: Deploy 
+    environment: demo 
     steps:  
     - script: echo Deploying the code! 
