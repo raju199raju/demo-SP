@@ -23,6 +23,6 @@ stages:
   jobs: 
      
   - job: Deploy 
-    environment: demo 
+    environment: Approver 
     steps:  
     - script: echo Deploying the code! 
