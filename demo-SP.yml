@@ -22,6 +22,11 @@ stages:
 - stage: Deploy  
   jobs: 
   - deployment: DeployWeb
-    environment:approver
-    steps:  
-     - script: echo Deploying the code! 
+    environment: 'approver'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - checkout: self 
+          - script: echo my first deployment
+  
